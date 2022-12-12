@@ -41,8 +41,9 @@ contract NftAttributes {
     }
 
     function readTokenAttributes(uint256 tokenId) public view returns (uint8[12] memory attributes) {
-        uint256 start = (tokenId - 1) * 9;
-        return parseTokenAttributes(uint72(bytes9((SSTORE2.read(storageAddress, start, start + 9)))));
+        unchecked {
+            return parseTokenAttributes(uint72(bytes9((SSTORE2.read(storageAddress, (tokenId - 1) * 9, tokenId * 9)))));
+        }
     }
 
     function parseTokenAttributes(uint72 attributesPacked) internal pure returns (uint8[12] memory attributes) {
