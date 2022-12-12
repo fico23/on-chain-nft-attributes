@@ -42,22 +42,22 @@ contract NftAttributes {
 
     function readTokenAttributes(uint256 tokenId) public view returns (uint8[12] memory attributes) {
         uint256 start = (tokenId - 1) * 9;
-        return parseTokenAttributes(bytes9(SSTORE2.read(storageAddress, start, start + 9)));
+        return parseTokenAttributes(uint72(bytes9((SSTORE2.read(storageAddress, start, start + 9)))));
     }
 
-    function parseTokenAttributes(bytes9 attributesPacked) internal pure returns (uint8[12] memory attributes) {
-        attributes[0] = uint8(uint72(attributesPacked) >> SHIFT_ZERO);
-        attributes[1] = uint8((uint72(attributesPacked) & MASK_ONE) >> SHIFT_ONE);
-        attributes[2] = uint8((uint72(attributesPacked) & MASK_TWO) >> SHIFT_TWO);
-        attributes[3] = uint8((uint72(attributesPacked) & MASK_THREE) >> SHIFT_THREE);
-        attributes[4] = uint8((uint72(attributesPacked) & MASK_FOUR) >> SHIFT_FOUR);
-        attributes[5] = uint8((uint72(attributesPacked) & MASK_FIVE) >> SHIFT_FIVE);
-        attributes[6] = uint8((uint72(attributesPacked) & MASK_SIX) >> SHIFT_SIX);
-        attributes[7] = uint8((uint72(attributesPacked) & MASK_SEVEN) >> SHIFT_SEVEN);
-        attributes[8] = uint8((uint72(attributesPacked) & MASK_EIGHT) >> SHIFT_EIGHT);
-        attributes[9] = uint8((uint72(attributesPacked) & MASK_NINE) >> SHIFT_NINE);
-        attributes[10] = uint8((uint72(attributesPacked) & MASK_TEN) >> SHIFT_TEN);
-        attributes[11] = uint8((uint72(attributesPacked) & MASK_ELEVEN));
+    function parseTokenAttributes(uint72 attributesPacked) internal pure returns (uint8[12] memory attributes) {
+        attributes[0] = uint8(attributesPacked >> SHIFT_ZERO);
+        attributes[1] = uint8((attributesPacked & MASK_ONE) >> SHIFT_ONE);
+        attributes[2] = uint8((attributesPacked & MASK_TWO) >> SHIFT_TWO);
+        attributes[3] = uint8((attributesPacked & MASK_THREE) >> SHIFT_THREE);
+        attributes[4] = uint8((attributesPacked & MASK_FOUR) >> SHIFT_FOUR);
+        attributes[5] = uint8((attributesPacked & MASK_FIVE) >> SHIFT_FIVE);
+        attributes[6] = uint8((attributesPacked & MASK_SIX) >> SHIFT_SIX);
+        attributes[7] = uint8((attributesPacked & MASK_SEVEN) >> SHIFT_SEVEN);
+        attributes[8] = uint8((attributesPacked & MASK_EIGHT) >> SHIFT_EIGHT);
+        attributes[9] = uint8((attributesPacked & MASK_NINE) >> SHIFT_NINE);
+        attributes[10] = uint8((attributesPacked & MASK_TEN) >> SHIFT_TEN);
+        attributes[11] = uint8((attributesPacked & MASK_ELEVEN));
     }
 
     function parseTokenAttributes2(bytes9 attributesPacked) internal pure returns (uint8[12] memory attributes) {
