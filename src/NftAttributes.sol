@@ -60,30 +60,4 @@ contract NftAttributes {
         attributes[10] = uint8((attributesPacked & MASK_TEN) >> SHIFT_TEN);
         attributes[11] = uint8((attributesPacked & MASK_ELEVEN));
     }
-
-    function parseTokenAttributes2(bytes9 attributesPacked) internal pure returns (uint8[12] memory attributes) {
-        attributes[11] = uint8((uint72(attributesPacked) & MASK_5_DIGITS));
-        uint72 currentAttributesPacked = uint72(attributesPacked) >> 5;
-        attributes[10] = uint8(currentAttributesPacked & MASK_5_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 5;
-        attributes[9] = uint8(currentAttributesPacked & MASK_4_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 4;
-        attributes[8] = uint8(currentAttributesPacked & MASK_7_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 7;
-        attributes[7] = uint8(currentAttributesPacked & MASK_6_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 6;
-        attributes[6] = uint8(currentAttributesPacked & MASK_6_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 6;
-        attributes[5] = uint8(currentAttributesPacked & MASK_7_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 7;
-        attributes[4] = uint8(currentAttributesPacked & MASK_4_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 4;
-        attributes[3] = uint8(currentAttributesPacked & MASK_6_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 6;
-        attributes[2] = uint8(currentAttributesPacked & MASK_4_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 4;
-        attributes[1] = uint8(currentAttributesPacked & MASK_6_DIGITS);
-        currentAttributesPacked = currentAttributesPacked >> 6;
-        attributes[0] = uint8(currentAttributesPacked & MASK_6_DIGITS);
-    }
 }
