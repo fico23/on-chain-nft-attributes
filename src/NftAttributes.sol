@@ -12,17 +12,17 @@ contract NftAttributes {
     uint8 internal constant MASK_6_DIGITS = 0x3f;
     uint8 internal constant MASK_7_DIGITS = 0x7f;
 
-    uint256 internal constant SHIFT_ZERO = 60;
-    uint256 internal constant SHIFT_ONE = 54;
-    uint256 internal constant SHIFT_TWO = 50;
-    uint256 internal constant SHIFT_THREE = 44;
-    uint256 internal constant SHIFT_FOUR = 40;
-    uint256 internal constant SHIFT_FIVE = 33;
-    uint256 internal constant SHIFT_SIX = 27;
-    uint256 internal constant SHIFT_SEVEN = 21;
-    uint256 internal constant SHIFT_EIGHT = 14;
-    uint256 internal constant SHIFT_NINE = 10;
-    uint256 internal constant SHIFT_TEN = 5;
+    uint8 internal constant SHIFT_ZERO = 60;
+    uint8 internal constant SHIFT_ONE = 54;
+    uint8 internal constant SHIFT_TWO = 50;
+    uint8 internal constant SHIFT_THREE = 44;
+    uint8 internal constant SHIFT_FOUR = 40;
+    uint8 internal constant SHIFT_FIVE = 33;
+    uint8 internal constant SHIFT_SIX = 27;
+    uint8 internal constant SHIFT_SEVEN = 21;
+    uint8 internal constant SHIFT_EIGHT = 14;
+    uint8 internal constant SHIFT_NINE = 10;
+    uint8 internal constant SHIFT_TEN = 5;
 
     constructor(address _storageAddress) {
         storageAddress = _storageAddress;
