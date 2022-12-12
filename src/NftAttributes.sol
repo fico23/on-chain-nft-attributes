@@ -7,22 +7,10 @@ contract NftAttributes {
     // can be constant but immutable for testing purposes
     address immutable storageAddress;
 
-    uint256 internal constant MASK_ONE = 0xfc0000000000000;
-    uint256 internal constant MASK_TWO = 0x3c000000000000;
-    uint256 internal constant MASK_THREE = 0x3f00000000000;
-    uint256 internal constant MASK_FOUR = 0xf0000000000;
-    uint256 internal constant MASK_FIVE = 0xfe00000000;
-    uint256 internal constant MASK_SIX = 0x1f8000000;
-    uint256 internal constant MASK_SEVEN = 0x7e00000;
-    uint256 internal constant MASK_EIGHT = 0x1fc000;
-    uint256 internal constant MASK_NINE = 0x3c00;
-    uint256 internal constant MASK_TEN = 0x3e0;
-    uint256 internal constant MASK_ELEVEN = 0x1f;
-
-    uint256 internal constant MASK_4_DIGITS = 0xf;
-    uint256 internal constant MASK_5_DIGITS = 0x1f;
-    uint256 internal constant MASK_6_DIGITS = 0x3f;
-    uint256 internal constant MASK_7_DIGITS = 0x7f;
+    uint8 internal constant MASK_4_DIGITS = 0xf;
+    uint8 internal constant MASK_5_DIGITS = 0x1f;
+    uint8 internal constant MASK_6_DIGITS = 0x3f;
+    uint8 internal constant MASK_7_DIGITS = 0x7f;
 
     uint256 internal constant SHIFT_ZERO = 60;
     uint256 internal constant SHIFT_ONE = 54;
@@ -48,16 +36,16 @@ contract NftAttributes {
 
     function parseTokenAttributes(uint72 attributesPacked) internal pure returns (uint8[12] memory attributes) {
         attributes[0] = uint8(attributesPacked >> SHIFT_ZERO);
-        attributes[1] = uint8((attributesPacked & MASK_ONE) >> SHIFT_ONE);
-        attributes[2] = uint8((attributesPacked & MASK_TWO) >> SHIFT_TWO);
-        attributes[3] = uint8((attributesPacked & MASK_THREE) >> SHIFT_THREE);
-        attributes[4] = uint8((attributesPacked & MASK_FOUR) >> SHIFT_FOUR);
-        attributes[5] = uint8((attributesPacked & MASK_FIVE) >> SHIFT_FIVE);
-        attributes[6] = uint8((attributesPacked & MASK_SIX) >> SHIFT_SIX);
-        attributes[7] = uint8((attributesPacked & MASK_SEVEN) >> SHIFT_SEVEN);
-        attributes[8] = uint8((attributesPacked & MASK_EIGHT) >> SHIFT_EIGHT);
-        attributes[9] = uint8((attributesPacked & MASK_NINE) >> SHIFT_NINE);
-        attributes[10] = uint8((attributesPacked & MASK_TEN) >> SHIFT_TEN);
-        attributes[11] = uint8((attributesPacked & MASK_ELEVEN));
+        attributes[1] = uint8(attributesPacked >> SHIFT_ONE) & MASK_6_DIGITS;
+        attributes[2] = uint8(attributesPacked >> SHIFT_TWO) & MASK_4_DIGITS;
+        attributes[3] = uint8(attributesPacked >> SHIFT_THREE) & MASK_6_DIGITS;
+        attributes[4] = uint8(attributesPacked >> SHIFT_FOUR) & MASK_4_DIGITS;
+        attributes[5] = uint8(attributesPacked >> SHIFT_FIVE) & MASK_7_DIGITS;
+        attributes[6] = uint8(attributesPacked >> SHIFT_SIX) & MASK_6_DIGITS;
+        attributes[7] = uint8(attributesPacked >> SHIFT_SEVEN) & MASK_6_DIGITS;
+        attributes[8] = uint8(attributesPacked >> SHIFT_EIGHT) & MASK_7_DIGITS;
+        attributes[9] = uint8(attributesPacked >> SHIFT_NINE) & MASK_4_DIGITS;
+        attributes[10] = uint8(attributesPacked >> SHIFT_TEN) & MASK_5_DIGITS;
+        attributes[11] = uint8(attributesPacked) & MASK_5_DIGITS;
     }
 }

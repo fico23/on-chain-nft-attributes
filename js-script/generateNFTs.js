@@ -9,11 +9,17 @@ const attributeMaxValues = [60, 60, 10, 40, 10, 100, 50, 60, 100, 10, 25, 30]
 
 
 const main = async () => {
-    const bytecode = makeBytecode()
+    const [bytecode, bytecodePacked] = makeBytecode()
 
-    writeFoundryReadableToDisk(bytecode)
-    
-    // await writeToChain(bytecode)
+    writeArtifactToDisk('random5000NFTs', bytecode)
+    writeArtifactToDisk('random5000NFTsPacked', bytecodePacked)
+
+    console.log(readTokenAttributes(1).join(', '))
+    console.log(readTokenAttributes(1000).join(', '))
+    console.log(readTokenAttributes(4000).join(', '))
+    console.log(readTokenAttributes(5000).join(', '))
+
+    generateMasks()
 }
 
 const readTokenAttributes = (tokenId) => {
@@ -25,6 +31,7 @@ const readTokenAttributes = (tokenId) => {
 const generateMasks = () => {
     const masks = []
     const shifts = []
+    const digits = []
     const template = '000000000000000000000000000000000000000000000000000000000000000000'
     let templateIdx = 0;
     for (let i = 0; i < attributeMaxValues.length; i++) {
@@ -34,35 +41,37 @@ const generateMasks = () => {
         const maskHex = parseInt(maskBinary, 2).toString(16)
         masks.push(maskHex)
         shifts.push(66 - templateIdx - bitLength)
+        digits.push(bitLength)
 
         templateIdx += bitLength
     }
 
     console.log(masks.join('\n'))
     console.log(shifts.join(','))
+    console.log(digits.join(','))
 
     return masks;
 }
 
-const writeFoundryReadableToDisk = (bytecode) => {
+const writeArtifactToDisk = (name, bytecode) => {
     const artifact = {
         bytecode: {
             object: bytecode
         }
     }
 
-    fs.writeFileSync('artifacts/random5000NFTs.json', JSON.stringify(artifact))
+    fs.writeFileSync(`artifacts/${name}.json`, JSON.stringify(artifact))
 }
 
 const makeBytecode = () => {
-    let resultBinary = generateNftAttributesInBinary()
+    const [resultBinary, resultBinaryPacked] = generateNftAttributesInBinary()
 
-    return makeDeployableBytecode(resultBinary)
+    return [makeDeployableBytecode(resultBinary), makeDeployableBytecode(resultBinaryPacked)]
 }
 
 const makeDeployableBytecode = (resultBinary) => {
     let resultHex = ''
-    for (let i = 0; i < 360000; i += 4) {
+    for (let i = 0; i < resultBinary.length; i += 4) {
         resultHex = resultHex + parseInt(resultBinary.substring(i, i + 4), 2).toString(16).toUpperCase()
     }
 
@@ -71,6 +80,7 @@ const makeDeployableBytecode = (resultBinary) => {
 
 const generateNftAttributesInBinary = () => {
     let resultBinary = ''
+    let resultBinaryPacked = ''
     let resultReadable = []
     let nftBinary = ''
     for (let i = 0; i < 5000; ++i) {
@@ -85,13 +95,14 @@ const generateNftAttributesInBinary = () => {
         // add six zeroes to round to 72 bits = 9 bytes
 
         resultBinary = resultBinary + '000000' + nftBinary
+        resultBinaryPacked = resultBinaryPacked + nftBinary
 
         nftBinary = ''
     }
     
     fs.writeFileSync('random5000NFTsReadable.txt', JSON.stringify(resultReadable))
 
-    return resultBinary
+    return [resultBinary, resultBinaryPacked]
 }
 
 main()
