@@ -1,0 +1,12 @@
+- BackgroundColor: 0 -> 60
+- BackgroundEffect: 0 -> 60
+- Wings: 0 -> 10
+- SkinColor: 0 -> 40
+- SkinPattern: 0 -> 10
+- Body: 0 -> 100
+- Mouth: 0 -> 50
+- Eyes: 0 -> 60
+- Hat: 0 -> 100
+- Pet: 0 -> 10
+- Accessory: 0 -> 25
+- Border: 0 -> 30

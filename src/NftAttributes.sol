@@ -42,9 +42,7 @@ contract NftAttributes {
 
     function readTokenAttributes(uint256 tokenId) public view returns (uint8[12] memory attributes) {
         uint256 start = (tokenId - 1) * 9;
-        bytes memory pureMemory = SSTORE2.read(storageAddress, start, start + 9);
-        bytes9 attributesPacked = bytes9(pureMemory);
-        return parseTokenAttributes(attributesPacked);
+        return parseTokenAttributes(bytes9(SSTORE2.read(storageAddress, start, start + 9)));
     }
 
     function parseTokenAttributes(bytes9 attributesPacked) internal pure returns (uint8[12] memory attributes) {
