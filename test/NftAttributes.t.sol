@@ -56,4 +56,8 @@ contract NftAttributesTest is Test {
         assertAttributes(nftAttributes.readTokenAttributes(5000), expectedToken5000);
         assertAttributes(nftAttributesPacked.readTokenAttributes(5000), expectedToken5000);
     }
+
+    function testFailUncheckedUnderflow() public view {
+        nftAttributes.readTokenAttributes(0);
+    }
 }

@@ -1,1 +1,2 @@
 NftAttributesTest:testAttributes() (gas: 80027)
+NftAttributesTest:testFailUncheckedUnderflow() (gas: 8343)
